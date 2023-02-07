@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\LikePost;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +87,25 @@ class PostController extends Controller
         $comment->save();
         session()->put('status', 'Comment ditambahkan! ' ); 
         return redirect()->back();
+    }
+
+    public function like_post(Request $request)
+    {
+        $id = $request->id;
+        $user_id = Auth::user()->id;
+        $like = 0;
+        $count = LikePost::where('post_id',$id)->where('user_id',$user_id)->count();
+        if($count==0){
+            $like = new LikePost();
+            $like->user_id=  $user_id;
+            $like->post_id = $id;
+            $like->save();
+            echo 'success like';
+        }else{
+            $like = LikePost::where('post_id',$id)->where('user_id',$user_id)->first();
+            $like->delete();
+            echo 'success Unlike';
+        }
     }
 
     /**

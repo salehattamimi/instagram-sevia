@@ -33,3 +33,39 @@ function comment_post(token, id, modal) {
             $(modal + 'Isi').html(data);
         });
 }
+
+function like_post(token, id) {
+    var public_path = $('#public_path').val(); /* di layouts */
+    var act = public_path + '/post/like';
+    $.post(act, {
+            _token: token,
+            id: id
+        },
+        function(data) {
+            if (data == 'success like') {
+                swal({
+                        title: "Like Success",
+                        text: "",
+                        confirmButtonColor: "#4CAF50",
+                        type: "success"
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
+            } else {
+                swal({
+                        title: "Post di Unlike",
+                        text: "",
+                        confirmButtonColor: "#FF5722",
+                        type: "success"
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
+            }
+        });
+}

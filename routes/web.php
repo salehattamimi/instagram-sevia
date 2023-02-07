@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/post/sore', [PostController::class, 'store'])->name('post.store');
         Route::post('/post/comment/', [PostController::class, 'comment_page'])->name('post.comment');
         Route::post('/post/comment/store', [PostController::class, 'comment_store'])->name('comment.store');
+        Route::post('/post/like', [PostController::class, 'like_post'])->name('like.store');
 
     });
 });
